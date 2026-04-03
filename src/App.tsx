@@ -1,8 +1,10 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import BookList from "./components/BookList";
 import Cart from "./components/Cart";
 import type { CartItem } from "./components/Cart";
+import AdminBooks from "./components/AdminBooks";
 
 function App() {
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
@@ -32,21 +34,29 @@ function App() {
   const totalItems = cartItems.reduce((sum, i) => sum + i.quantity, 0);
 
   return (
-      <div>
-        {showCart ? (
-            <Cart
-                cartItems={cartItems}
-                updateCart={updateCart}
-                onContinueShopping={() => setShowCart(false)}
-            />
-        ) : (
-            <BookList
-                addToCart={addToCart}
-                onViewCart={() => setShowCart(true)}
-                totalItems={totalItems}
-            />
-        )}
-      </div>
+      <BrowserRouter>
+        <Routes>
+          <Route
+              path="/"
+              element={
+                showCart ? (
+                    <Cart
+                        cartItems={cartItems}
+                        updateCart={updateCart}
+                        onContinueShopping={() => setShowCart(false)}
+                    />
+                ) : (
+                    <BookList
+                        addToCart={addToCart}
+                        onViewCart={() => setShowCart(true)}
+                        totalItems={totalItems}
+                    />
+                )
+              }
+          />
+          <Route path="/adminbooks" element={<AdminBooks />} />
+        </Routes>
+      </BrowserRouter>
   );
 }
 
