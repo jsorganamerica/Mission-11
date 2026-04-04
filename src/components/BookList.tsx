@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import { API_BASE } from "../api";
 
 interface Book {
     bookID: number;
@@ -36,15 +36,13 @@ export default function BookList({ addToCart, onViewCart, totalItems }: Props) {
     const totalPages = Math.ceil(totalCount / pageSize);
 
     useEffect(() => {
-        fetch("http://localhost:5293/api/books/categories")
+        fetch(`${API_BASE}/categories`)
             .then((res) => res.json())
             .then((data: string[]) => setCategories(data));
     }, []);
 
     useEffect(() => {
-        fetch(
-            `http://localhost:5293/api/books?page=${page}&pageSize=${pageSize}&sortAsc=${sortAsc}&category=${selectedCategory}`
-        )
+        fetch(`${API_BASE}?page=${page}&pageSize=${pageSize}&sortAsc=${sortAsc}&category=${selectedCategory}`)
             .then((res) => res.json())
             .then((data: ApiResponse) => {
                 setBooks(data.books);

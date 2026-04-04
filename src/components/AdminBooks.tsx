@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const API = "http://localhost:5293/api/books";
+const API = "https://bookstore-backend-james-bhawdhhjceaphefs.centralus-01.azurewebsites.net/api/books";
 
 type Book = {
     bookID: number;
